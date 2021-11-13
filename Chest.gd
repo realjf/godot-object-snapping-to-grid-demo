@@ -33,9 +33,37 @@ func _input(event):
 
 func _draw():
 	if collision:
-		draw_rect(rect, Color.red)
+		var red = Color(1.0, 0.0, 0.0, 0.5)
+		draw_rect(rect, red)
+		_draw_line(red)
 	else:
-		draw_rect(rect, Color.green)
+		var green = Color(0.0, 1.0, 0.0, 0.5)
+		draw_rect(rect, green)
+		_draw_line(green)
+		
+
+
+func _draw_line(color: Color):
+	draw_line(
+			Vector2(rect.position.x - rect.size.x, rect.position.y), 
+			Vector2(rect.position.x + 2 * rect.size.x, rect.position.y),
+			color
+		)
+	draw_line(
+		Vector2(rect.position.x - rect.size.x, rect.position.y + rect.size.y), 
+		Vector2(rect.position.x + 2 * rect.size.x, rect.position.y + rect.size.y),
+		color
+	)
+	draw_line(
+		Vector2(rect.position.x, rect.position.y - rect.size.y), 
+		Vector2(rect.position.x, rect.position.y + 2 * rect.size.y),
+		color
+	)
+	draw_line(
+		Vector2(rect.position.x + rect.size.x, rect.position.y - rect.size.y), 
+		Vector2(rect.position.x + rect.size.x, rect.position.y + 2 * rect.size.y),
+		color
+	)
 	
 	
 func _on_Area2D_body_entered(body):
