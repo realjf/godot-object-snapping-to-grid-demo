@@ -3,6 +3,7 @@ extends Node2D
 
 var rect = Rect2(0,0,0,0)
 var mouse_tile
+var collision = false
 
 func _ready():
 	pass
@@ -24,10 +25,24 @@ func _input(event):
 		update()
 		if event is InputEventMouseButton and event.is_pressed() and event.button_index == BUTTON_LEFT:
 			# place the chest
-			set_process(false)
-			rect = Rect2(0,0,0,0)
+			if !collision:
+				set_process(false)
+				rect = Rect2(0,0,0,0)
 	else:
 		rect = Rect2(0,0,0,0)
 
 func _draw():
-	draw_rect(rect, Color.green)
+	if collision:
+		draw_rect(rect, Color.red)
+	else:
+		draw_rect(rect, Color.green)
+	
+	
+func _on_Area2D_body_entered(body):
+	collision = true
+	
+	
+
+
+func _on_Area2D_body_exited(body):
+	collision = false
